@@ -113,7 +113,7 @@ function listFilter(i) {
 function pagination(dataX,nowPage) {
     let dataLen = dataX.length;
     let perPage = 4;
-    let pageNumber = Math.ceil(dataLen / 4);
+    let pageNumber = Math.ceil(dataLen / perPage);
     
     // 設定分頁第一筆資料及最後一筆資料
     const minData = (nowPage * perPage) - perPage + 1;  //第2頁 2*4-4+1=5
