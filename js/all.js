@@ -58,7 +58,6 @@ function addSelect() {
     // 將撈出的陣列值逐一放入選單
     zoneArray.forEach((item) => {
         selectData += `
-        <li><a data-part="苓雅區" href="#">${item}</a></li>
         <option class="selectOpt" value="${item}">${item}</option>;
         ` 
         // 方法二：用 DOM 節點
