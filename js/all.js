@@ -10,7 +10,7 @@ let newData = [];
 let xhr = new XMLHttpRequest();
 xhr.open('get','https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json',true);
 xhr.send(null);
-xhr.onload = function(){
+xhr.onload = () => {
     data = JSON.parse(xhr.responseText).result.records;
     // console.log(data)
 
@@ -27,6 +27,7 @@ pagination(newData,1)
 
 // 監聽：熱門地點按鈕，列表篩選函式
 popularAreaBtn.addEventListener('click',function (e) {
+    e.preventDefault();
     if (e.target.nodeName === 'A') {
         listFilter(e.target.textContent);
     }
@@ -48,15 +49,16 @@ function addSelect() {
     let zoneArray = [];
 
     // 先撈出不重複的地區到空陣列
-    data.forEach(function (item) {
+    data.forEach((item) => {
         if(zoneArray.indexOf(item.Zone) === -1){
             zoneArray.push(item.Zone)  
         }
     });
 
     // 將撈出的陣列值逐一放入選單
-    zoneArray.forEach(function (item){
+    zoneArray.forEach((item) => {
         selectData += `
+        <li><a data-part="苓雅區" href="#">${item}</a></li>
         <option class="selectOpt" value="${item}">${item}</option>;
         ` 
         // 方法二：用 DOM 節點
@@ -84,7 +86,7 @@ function listFilter(i) {
     // 故將兩監聽參數統一成一個變數（數值一樣）
     // console.log(i)
     
-    data.forEach(function (item) {
+    data.forEach((item) => {
         if(target !== item.Zone){
             return
             }
@@ -100,6 +102,10 @@ function listFilter(i) {
                 Ticketinfo:item.Ticketinfo
             });
     })
+    // 將點擊熱門按鈕的值，對應選單的值，賦予 selected ，使選單跟著跳轉
+    // console.log(zoneSelect.querySelector(`option[value=${i}]`))
+    zoneSelect.querySelector(`option[value=${i}]`).selected = 'selected';
+
     if(target === '請選擇' ){
         zoneTitle.textContent = '全部列表';
         newData = data;
@@ -120,7 +126,7 @@ function pagination(dataX,nowPage) {
     const maxData = nowPage * perPage;  //第2頁 2*4=8
 
     let zoneItem = [];
-    dataX.forEach(function (item,index) {
+    dataX.forEach((item,index) => {
         const pageRange = index + 1; // 資料索引從0開始
         if ( pageRange >= minData && pageRange <= maxData) {
             zoneItem.push(item);
@@ -143,7 +149,7 @@ function pagination(dataX,nowPage) {
 // 渲染分頁畫面
 function randerList(zone) {
     let str = '';    
-    zone.forEach(function(item){
+    zone.forEach((item) => {
         str +=`
             <li class="item">
                 <div class="img">
